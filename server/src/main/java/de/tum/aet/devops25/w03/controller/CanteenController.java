@@ -18,6 +18,16 @@ public class CanteenController {
         this.canteenService = canteenService;
     }
 
+//    /**
+//     * Get today's meals for a specific canteen
+//     * @param canteenName the ID of the canteen (e.g., "mensa-garching")
+//     * @return list of dishes available today at the specified canteen
+//     */
+//    @GetMapping("/{canteenName}/today")
+//    public ResponseEntity<List<Dish>> getTodayMeals(@PathVariable String canteenName) {
+//        // TODO: Implement the logic to fetch today's meals for the specified canteen using the CanteenService
+//        return ResponseEntity.ok(List.of());
+//    }
     /**
      * Get today's meals for a specific canteen
      * @param canteenName the ID of the canteen (e.g., "mensa-garching")
@@ -25,7 +35,10 @@ public class CanteenController {
      */
     @GetMapping("/{canteenName}/today")
     public ResponseEntity<List<Dish>> getTodayMeals(@PathVariable String canteenName) {
-        // TODO: Implement the logic to fetch today's meals for the specified canteen using the CanteenService
-        return ResponseEntity.ok(List.of());
+        List<Dish> todayMeals = canteenService.getTodayMeals(canteenName);
+        if (todayMeals.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(todayMeals);
     }
 }
